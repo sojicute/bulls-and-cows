@@ -1,5 +1,9 @@
 <div class="card-footer fixed-bottom py-3 border-0"  th:fragment="footer">
-    <div class="text-center">
+    <div th:if="${!#request.isUserInRole('USER')}" class="text-center">
         Don't have an account? <a th:href="@{/signup}" class="text-dark">Create One</a>
+    </div>
+
+    <div th:if="${#request.isUserInRole('USER')}" class="text-center">
+        <p class="text-dark">Hello [[${#httpServletRequest.remoteUser}]]</p>
     </div>
 </div>

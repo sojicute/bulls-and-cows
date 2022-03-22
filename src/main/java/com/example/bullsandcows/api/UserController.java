@@ -28,7 +28,7 @@ public class UserController {
 
     @RequestMapping("/login")
     public String login() {
-        return "/login";
+        return "login";
     }
 
     @RequestMapping("/home")
@@ -57,16 +57,13 @@ public class UserController {
         }
 
         try {
-            User user = userService.save(userDto);
+            userService.save(userDto);
         } catch (UserAlreadyExistException ex) {
-            ObjectError objectError = new ObjectError("username", ex.getMessage());
             result.rejectValue("username", "error.user", ex.getMessage());
             return "signup";
         }
 
         return "redirect:/home";
     }
-
-
 
 }

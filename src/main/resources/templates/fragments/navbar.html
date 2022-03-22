@@ -11,10 +11,10 @@
         <li class="nav-item">
           <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/game' ? 'active':''}" th:href="@{/game}">Game</a>
         </li>
-        <li class="nav-item">
+        <li th:if="${!#request.isUserInRole('USER')}" class="nav-item">
           <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/login' ? 'active':''}" th:href="@{/login}">Login</a>
         </li>
-        <li class="nav-item">
+        <li th:if="${!#request.isUserInRole('USER')}" class="nav-item">
           <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/signup' ? 'active':''}" th:href="@{/signup}">Sign up</a>
         </li>
         <li th:if="${#request.isUserInRole('USER')}" class="nav-item"  >

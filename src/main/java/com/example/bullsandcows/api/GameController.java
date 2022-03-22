@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class GameController {
 
-//    @PreAuthorize("hasAnyAuthority('USER')")
     @GetMapping("/games/")
     public String helloUser(){
         return "Hello user";
