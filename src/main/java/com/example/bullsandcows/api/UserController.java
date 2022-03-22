@@ -31,8 +31,9 @@ public class UserController {
         return "login";
     }
 
-    @RequestMapping("/home")
-    public String home() {
+    @GetMapping("/home")
+    public String home(Model model) {
+        model.addAttribute("users", userService.findAll());
         return "/home";
     }
 
