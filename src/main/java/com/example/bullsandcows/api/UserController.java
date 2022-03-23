@@ -26,20 +26,15 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping("/login")
-    public String login() {
-        return "login";
-    }
-
     @GetMapping("/home")
     public String home(Model model) {
         model.addAttribute("users", userService.findAll());
         return "/home";
     }
 
-    @RequestMapping("/game")
-    public String game() {
-        return "/game";
+    @RequestMapping("/login")
+    public String login() {
+        return "login";
     }
 
 

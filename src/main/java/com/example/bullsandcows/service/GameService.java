@@ -1,5 +1,8 @@
 package com.example.bullsandcows.service;
 
-public interface GameService {
+import java.util.HashMap;
 
+public interface GameService {
+    void game(Integer suggestNumber);
+    HashMap<String, Integer> compareTwoNumber(String hiddenNumber, String suggestNumber);
 }

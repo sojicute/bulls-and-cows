@@ -2,6 +2,9 @@ package com.example.bullsandcows.domain;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 @Entity
 public class Game {
@@ -10,7 +13,7 @@ public class Game {
     private Long id;
 
     private Integer hiddenNumber;
-    private Integer counter;
+    private Integer suggestNumber;
 
     public Long getId() {
         return id;
@@ -28,11 +31,11 @@ public class Game {
         this.hiddenNumber = hiddenNumber;
     }
 
-    public Integer getCounter() {
-        return counter;
+    public Integer getSuggestNumber() {
+        return suggestNumber;
     }
 
-    public void setCounter(Integer counter) {
-        this.counter = counter;
+    public void setSuggestNumber(Integer suggestNumber) {
+        this.suggestNumber = suggestNumber;
     }
 }
