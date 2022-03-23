@@ -5,16 +5,16 @@ import javax.validation.constraints.Size;
 
 public class UserDto {
 
-    @NotEmpty(message = "User's name cannot be empty.")
-    @Size(min = 5, max = 250)
+    @NotEmpty(message = "User's name cannot be empty")
+    @Size(min = 4, max = 250, message = "User must have at least 4 characters")
     private String username;
 
-    @NotEmpty(message = "Password cannot be empty.")
-    @Size(min = 8, max = 250)
+    @NotEmpty(message = "Password cannot be empty")
+    @Size(min = 8, message = "Password must have at least 8 characters ")
     private String password;
 
-    @NotEmpty(message = "Password cannot be empty.")
-    @Size(min = 8, max = 250)
+    @NotEmpty(message = "Password cannot be empty")
+    @Size(min = 8, message = "Password must have at least 8 characters")
     private String matchingPassword;
 
     public String getUsername() {

@@ -57,6 +57,12 @@ public class UserController {
             return "signup";
         }
 
+        if (!userDto.getPassword().equals(userDto.getMatchingPassword())) {
+            result.rejectValue("password", "error.user", "");
+            result.rejectValue("matchingPassword", "error.user", "Passwords do not match");
+            return "signup";
+        }
+
         try {
             userService.save(userDto);
         } catch (UserAlreadyExistException ex) {
