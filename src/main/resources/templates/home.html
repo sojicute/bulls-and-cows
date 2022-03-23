@@ -21,8 +21,12 @@
             <tr th:each="user, iter : ${users}">
                 <th scope="row" th:text="${iter.index+1}"></th>
                 <td th:text="${user.username}">Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
+                <td th:text="${user.password}">Otto</td>
+<!--                <td th:text="${user.roles}">@mdo</td>-->
+
+                <td th:each="role : ${user.roles}">
+                    <p th:text="${role.name}"><p>
+                </td>
             </tr>
             </tbody>
         </table>

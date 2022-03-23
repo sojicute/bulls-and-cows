@@ -26,13 +26,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .antMatchers("/home").permitAll()
                     .antMatchers("/login").permitAll()
                     .antMatchers("/signup").permitAll()
-                    .antMatchers("/user/**").hasAnyRole("USER")
                     .anyRequest().authenticated()
                 .and()
                 .formLogin()
-                    .loginPage("/login").successForwardUrl("/home")
-                    .usernameParameter("security_username")
-                    .passwordParameter("security_password")
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/home")
+                    .permitAll()
                 .and()
                 .logout()
                     .permitAll();
@@ -44,17 +43,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Autowired
-    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
+    public void configureGlobal(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.userDetailsService(userService).passwordEncoder(bCryptPasswordEncoder());
     }
 
-//    @Autowired
-//    public void configureGlobal(AuthenticationManagerBuilder auth)
-//            throws Exception {
-//        auth
-//                .inMemoryAuthentication()
-//                .withUser("user").password(new BCryptPasswordEncoder().encode("password")).roles("USER")
-//                .and()
-//                .withUser("admin").password(new BCryptPasswordEncoder().encode("admin")).roles("ADMIN");
-//    }
 }
