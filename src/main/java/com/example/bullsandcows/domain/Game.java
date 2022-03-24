@@ -1,41 +1,33 @@
 package com.example.bullsandcows.domain;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 @Entity
+@Table
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Game {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private Integer hiddenNumber;
     private Integer suggestNumber;
 
-    public Long getId() {
-        return id;
-    }
+    private Integer attemptCount;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private Boolean isWin;
 
-    public Integer getHiddenNumber() {
-        return hiddenNumber;
-    }
-
-    public void setHiddenNumber(Integer hiddenNumber) {
-        this.hiddenNumber = hiddenNumber;
-    }
-
-    public Integer getSuggestNumber() {
-        return suggestNumber;
-    }
-
-    public void setSuggestNumber(Integer suggestNumber) {
-        this.suggestNumber = suggestNumber;
-    }
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable=true)
+    private User user;
 }
