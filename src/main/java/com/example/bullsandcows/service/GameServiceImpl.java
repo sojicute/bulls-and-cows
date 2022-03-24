@@ -21,15 +21,35 @@ public class GameServiceImpl implements GameService {
 
 
     @Override
+    public Game findByUserAndId(User user, Long id) {
+        return gameRepository.findByUserAndId(user, id);
+    }
+
+    @Override
     public Game createNewGame(User user) {
         Game game = new Game();
         game.setUser(user);
-        game.setHiddenNumber(1234);
+        game.setSecretNumber(getSecretNumber());
+        System.out.println(game.getSecretNumber());
         return gameRepository.save(game);
     }
+
 
     @Override
     public Game findById(Long id) {
         return gameRepository.findById(id).get();
+    }
+
+
+    private String getSecretNumber() {
+        List<Integer> ints = new ArrayList<>();
+        Random rand = new Random();
+        while (ints.size() != 4) {
+            int number = rand.nextInt(9);
+            if (!ints.contains(number)) {
+                ints.add(number);
+            }
+        }
+        return ints.stream().map(Object::toString).collect(Collectors.joining(""));
     }
 }

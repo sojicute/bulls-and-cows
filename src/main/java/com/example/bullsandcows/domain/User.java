@@ -27,9 +27,6 @@ public class User implements UserDetails {
     private String username;
     private String password;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
-    private List<Game> games;
-
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
 

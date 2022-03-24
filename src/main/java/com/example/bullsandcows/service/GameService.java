@@ -9,4 +9,5 @@ import java.util.List;
 public interface GameService {
     Game createNewGame(User user);
     Game findById(Long id);
+    Game findByUserAndId(User user, Long id);
 }

@@ -5,26 +5,31 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 @Entity
 @Table
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Game {
+public class Attempt {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String secretNumber;
+    private Integer countCow = 0;
+    private Integer countBull = 0;
 
-    private Boolean isWin;
+    private String suggestNumber;
+
+    private boolean isMatch;
 
     @ManyToOne
-    @JoinColumn(name="user_id", nullable=true)
+    @JoinColumn(name = "game_id", nullable = true)
+    private Game game;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = true)
     private User user;
+
 }
