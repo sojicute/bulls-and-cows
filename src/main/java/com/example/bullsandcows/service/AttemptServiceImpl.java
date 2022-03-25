@@ -33,7 +33,7 @@ public class AttemptServiceImpl implements AttemptService {
     }
 
     @Override
-    public Attempt checkAttempt(Game game, Attempt attempt) {
+    public Boolean checkAttempt(Game game, Attempt attempt) {
 
         String[] secretArr = game.getSecretNumber().split("");
         String[] suggestArr = attempt.getSuggestNumber().split("");
@@ -49,11 +49,15 @@ public class AttemptServiceImpl implements AttemptService {
                 }
             }
         }
+        attemptRepository.save(attempt);
 
         if (attempt.getCountBull() == 4) {
             attempt.setMatch(true);
+            attemptRepository.save(attempt);
+            return true;
         }
-        return attemptRepository.save(attempt);
+
+        return false;
     }
 
     @Override

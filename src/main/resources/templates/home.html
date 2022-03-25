@@ -13,7 +13,7 @@
             <tr>
                 <th scope="col">#</th>
                 <th scope="col">Name</th>
-                <th scope="col">Average</th>
+                <th scope="col">Avg</th>
                 <th scope="col">Total games</th>
             </tr>
             </thead>
@@ -21,8 +21,8 @@
             <tr th:each="user, iter : ${users}">
                 <th scope="row" th:text="${iter.index+1}"></th>
                 <td th:text="${user.username}">Mark</td>
+                <td th:text="${user.average}"></td>
                 <td th:text="${#lists.size(user.games)}">Otto</td>
-                <td th:text="${#lists.size(user.games)}"></td>
             </tr>
             </tbody>
         </table>

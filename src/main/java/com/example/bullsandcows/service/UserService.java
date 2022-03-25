@@ -41,6 +41,7 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
+
     public User save(UserDto userDto) throws UserAlreadyExistException {
 
         if (usernameExist(userDto.getUsername())) {

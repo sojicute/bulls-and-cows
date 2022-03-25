@@ -5,31 +5,123 @@
 
 <div th:replace="fragments/navbar :: nav "></div>
 
-<div class="container">
+<div class="container-md p-4">
     <div class="row">
         <div class="col col-lg-4">
-            <ul th:each="attempt : ${attempts}" class="list-group list-group-flush">
+             <ul th:each="attempt : ${attempts}" class="list-group list-group-flush">
                 <li th:text="${'Б' + attempt.countBull +'К'+ attempt.countCow}" class="list-group-item"></li>
+                <li th:if="${attempt.isMatch}" th:text="${'Победа! Это число ' +  attempt.suggestNumber}" class="list-group-item"></li>
             </ul>
         </div>
-        <div class="col">
-            <div class="card shadow-lg">
-                <div class="card-body p-5">
-                    <h1 class="fs-4 card-title fw-bold mb-4">Welcome to game page</h1>
-                    <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-                    <form th:object="${at}" method="POST">
-                        <div class="input-group mb-3">
-                            <input type="number" name="suggestNumber" class="form-control" min="1" max="9999">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Button</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+        <div class="col mb-4">
+            <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+
+            <div class="d-flex justify-content-center mb-4">
+                <h1 name="suggestNumber" class="card-title text-capitalize" value="1412">NUMBER</h1>
             </div>
+
+            <form th:object="${attempt}" method="POST">
+                <div class="row">
+
+                    <div class="col-8 col-sm-10 mb-3">
+                        <input type="text" name="suggestNumber" class="form-control" value="">
+                    </div>
+
+                    <div class="col-4 col-sm-2 mb-3">
+                        <button class="btn btn-outline-dark" type="submit">Send</button>
+                    </div>
+
+                </div>
+                <div class="row mb-3">
+                    <div class ="btn-group-vertical input-keys" role="group" aria-label="Vertical button group">
+                        <div class="btn-group btn-group-lg" role="group" aria-label="First Row">
+                            <input type="button" class="btn btn-outline-dark" waves-effect value="7"/>
+                            <input type="button" class="btn btn-outline-dark" waves-effect value="8"/>
+                            <input type="button" class="btn btn-outline-dark" waves-effect value="9"/>
+                        </div>
+                        <div class="btn-group btn-group-lg" role="group" aria-label="Second Row">
+                            <input type="button" class="btn btn-outline-dark" waves-effect value="4"/>
+                            <input type="button" class="btn btn-outline-dark" waves-effect value="5"/>
+                            <input type="button" class="btn btn-outline-dark" waves-effect value="6"/>
+                        </div>
+                        <div class="btn-group btn-group-lg" role="group" aria-label="Third Row">
+                            <input type="button" class="btn btn-outline-dark" waves-effect value="1"/>
+                            <input type="button" class="btn btn-outline-dark" waves-effect value="2"/>
+                            <input type="button" class="btn btn-outline-dark" waves-effect value="3"/>
+                        </div>
+                        <div class="btn-group btn-group-lg" role="group" aria-label="Fourth Row">
+                            <input type="button" class="btn btn-outline-dark" waves-effect value="0"/>
+                            <input type="button" class="btn btn-outline-dark clear" waves-effect value="C"/>
+                        </div>
+                        <div class="btn-group btn-group-lg" role="group" aria-label="Fourth Row">
+                            <input type="submit" name="send" class="btn btn-outline-dark" waves-effect value="Send"/>
+                        </div>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>
+
+<script>
+    const input = {
+        displayValue: ""
+    };
+
+    function inputDigit(digit) {
+        input.displayValue = input.displayValue + digit;
+    }
+
+    function updateDisplay() {
+        const display = document.querySelector("input[name=suggestNumber]");
+        display.value = input.displayValue;
+    }
+
+    function disableButton() {
+        const btn = document.querySelector("input[name=send]");
+        btn.setAttribute("disabled", "disabled");
+    }
+
+    function resetButton() {
+        const btn = document.querySelector("input[name=send]");
+        btn.removeAttribute("disabled");
+    }
+
+    function resetDisplay() {
+        input.displayValue = "";
+    }
+
+    const keys = document.querySelector(".input-keys");
+    keys.addEventListener("click", (event) => {
+        const { target } = event;
+
+        if (!target.matches("input")) {
+            return;
+        }
+
+        if (target.classList.contains('clear')) {
+            resetDisplay();
+            updateDisplay();
+            return;
+        }
+
+        inputDigit(target.value);
+
+
+
+        if (input.displayValue.length < "4") {
+            disableButton();
+        } else if (input.displayValue.length === 4) {
+            resetButton();
+        }
+
+        if (input.displayValue.length > "4") {
+            return;
+        }
+
+        updateDisplay();
+    });
+</script>
 
 <div th:replace="fragments/footer :: footer"></div>
 

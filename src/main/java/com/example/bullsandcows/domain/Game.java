@@ -1,8 +1,6 @@
 package com.example.bullsandcows.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,7 +9,8 @@ import java.util.List;
 
 @Entity
 @Table
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class Game {
@@ -23,6 +22,7 @@ public class Game {
     private String secretNumber;
 
     private Boolean isWin;
+
 
     @ManyToOne
     @JoinColumn(name="user_id", nullable=true)

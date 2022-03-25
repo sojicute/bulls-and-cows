@@ -9,6 +9,6 @@ import java.util.List;
 public interface AttemptService {
     List<Attempt> findAttemptsByUserAndGame(User user, Game game);
     Attempt createAttempt(User user, Game game, String suggestNumber);
-    Attempt checkAttempt(Game game, Attempt attempt);
+    Boolean checkAttempt(Game game, Attempt attempt);
     Attempt save(Attempt attempt);
 }
