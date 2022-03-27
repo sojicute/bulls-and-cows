@@ -9,6 +9,7 @@ import com.example.bullsandcows.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -28,7 +29,7 @@ public class GameController {
     }
 
     @PostMapping("/game")
-    public String play(@AuthenticationPrincipal User user, @ModelAttribute("game") Game game) {
+    public String play(@AuthenticationPrincipal User user, @ModelAttribute("game") Game game, Model model) {
         System.out.println(game.getSecretNumber());
         game.checkGuess(game.getSecretNumber(), game.getGuessNumber());
         if (game.isCompleted()) {
@@ -43,6 +44,8 @@ public class GameController {
             stat.setAverageAttemptCount(stat.getAttemptCount()* 1.0/stat.getGameCount());
             stat.setUser(userService.findById(user.getId()));
             statService.save(stat);
+            model.addAttribute("attempts", game.getAttempts());
+            model.addAttribute("message", "Success! This number: " +  game.getGuessNumber());
             game.reset();
         }
         return "game";
