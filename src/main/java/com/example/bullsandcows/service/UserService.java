@@ -1,5 +1,6 @@
 package com.example.bullsandcows.service;
 
+import com.example.bullsandcows.domain.Game;
 import com.example.bullsandcows.domain.Role;
 import com.example.bullsandcows.domain.User;
 import com.example.bullsandcows.dto.UserDto;
@@ -29,6 +30,9 @@ public class UserService implements UserDetailsService {
         return userRepository.findAll();
     }
 
+    public User findById(Long id) {
+        return userRepository.findById(id).get();
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -40,7 +44,6 @@ public class UserService implements UserDetailsService {
         }
         return user;
     }
-
 
     public User save(UserDto userDto) throws UserAlreadyExistException {
 

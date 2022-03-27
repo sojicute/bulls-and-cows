@@ -1,38 +1,28 @@
 package com.example.bullsandcows.domain;
 
-import lombok.*;
-
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Size;
-
-@Entity
-@Table
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class Attempt {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer cowCount = 0;
+    private Integer bullCount = 0;
 
-    private Integer countCow = 0;
-    private Integer countBull = 0;
+//    @NotEmpty(message = "Number cannot be empty")
+//    @Size(min = 4, max=4, message = "Number must have at least 4 characters ")
+//    private String suggestNumber;
 
-    @NotEmpty(message = "Number cannot be empty")
-    @Size(min = 4, max=4, message = "Number must have at least 4 characters ")
-    private String suggestNumber;
 
-    private boolean isMatch;
+    public Integer getCowCount() {
+        return cowCount;
+    }
 
-    @ManyToOne
-    @JoinColumn(name = "game_id", nullable = true)
-    private Game game;
+    public void setCowCount(Integer cowCount) {
+        this.cowCount = cowCount;
+    }
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = true)
-    private User user;
+    public Integer getBullCount() {
+        return bullCount;
+    }
 
+    public void setBullCount(Integer bullCount) {
+        this.bullCount = bullCount;
+    }
 }

@@ -20,22 +20,13 @@ import java.util.Set;
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private long id;
 
     private String username;
     private String password;
 
-    private Integer average;
-
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Role> roles;
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Attempt> attempts;
-
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Game> games;
-
 
     public User(String username, String password, Set<Role> roles) {
         this.username = username;

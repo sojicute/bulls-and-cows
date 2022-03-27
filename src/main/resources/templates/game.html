@@ -7,25 +7,34 @@
 
 <div class="container-md p-4">
     <div class="row">
-        <div class="col col-lg-4">
-             <ul th:each="attempt : ${attempts}" class="list-group list-group-flush">
-                <li th:text="${'Б' + attempt.countBull +'К'+ attempt.countCow}" class="list-group-item"></li>
-                <li th:if="${attempt.isMatch}" th:text="${'Победа! Это число ' +  attempt.suggestNumber}" class="list-group-item"></li>
+        <div class="col-2">
+            <form th:action="@{/reset}" method="post">
+                <button class="btn btn-outline-dark" type="submit">Reset</button>
+            </form>
+        </div>
+        <div class="col">
+            <ul th:each="attempt : ${game.getAttempts()}" class="list-group list-group-flush">
+                <h4 th:text="${ 'Б' + attempt.bullCount + 'К' + attempt.cowCount +' '+ game.getGuessNumber()}" class="list-group-item"></h4>
             </ul>
+            <h5 th:if="${game.isCompleted}" th:text="${'Success! This number: ' +  game.getGuessNumber()}" class="list-group-item"></h5>
         </div>
         <div class="col mb-4">
-            <h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
-
             <div class="d-flex justify-content-center mb-4">
-                <h1 name="suggestNumber" class="card-title text-capitalize" value="1412">NUMBER</h1>
+                <h1 name="guessNumber" class="card-title text-capitalize">0000</h1>
             </div>
 
-            <form th:object="${attempt}" method="POST">
+            <form th:action="@{/game}" th:object="${game}" method="POST">
                 <div class="row">
 
                     <div class="col-8 col-sm-10 mb-3">
-                        <input type="text" name="suggestNumber" class="form-control" value="">
+                        <input type="text" name="guessNumber" class="form-control" value="">
                     </div>
+
+                    <div th:each="error: ${#fields.errors('guessNumber')}" th:text="${error}">
+                        Validation error
+                    </div>
+
+                    <h1 th:text="${#fields.hasErrors('guessNumber')}? 'is-invalid':''"></h1>
 
                     <div class="col-4 col-sm-2 mb-3">
                         <button class="btn btn-outline-dark" type="submit">Send</button>
@@ -35,26 +44,26 @@
                 <div class="row mb-3">
                     <div class ="btn-group-vertical input-keys" role="group" aria-label="Vertical button group">
                         <div class="btn-group btn-group-lg" role="group" aria-label="First Row">
-                            <input type="button" class="btn btn-outline-dark" waves-effect value="7"/>
-                            <input type="button" class="btn btn-outline-dark" waves-effect value="8"/>
-                            <input type="button" class="btn btn-outline-dark" waves-effect value="9"/>
+                            <input type="button" class="btn btn-outline-dark" value="7"/>
+                            <input type="button" class="btn btn-outline-dark" value="8"/>
+                            <input type="button" class="btn btn-outline-dark" value="9"/>
                         </div>
                         <div class="btn-group btn-group-lg" role="group" aria-label="Second Row">
-                            <input type="button" class="btn btn-outline-dark" waves-effect value="4"/>
-                            <input type="button" class="btn btn-outline-dark" waves-effect value="5"/>
-                            <input type="button" class="btn btn-outline-dark" waves-effect value="6"/>
+                            <input type="button" class="btn btn-outline-dark"  value="4"/>
+                            <input type="button" class="btn btn-outline-dark" value="5"/>
+                            <input type="button" class="btn btn-outline-dark" value="6"/>
                         </div>
                         <div class="btn-group btn-group-lg" role="group" aria-label="Third Row">
-                            <input type="button" class="btn btn-outline-dark" waves-effect value="1"/>
-                            <input type="button" class="btn btn-outline-dark" waves-effect value="2"/>
-                            <input type="button" class="btn btn-outline-dark" waves-effect value="3"/>
+                            <input type="button" class="btn btn-outline-dark" value="1"/>
+                            <input type="button" class="btn btn-outline-dark" value="2"/>
+                            <input type="button" class="btn btn-outline-dark" value="3"/>
                         </div>
                         <div class="btn-group btn-group-lg" role="group" aria-label="Fourth Row">
-                            <input type="button" class="btn btn-outline-dark" waves-effect value="0"/>
-                            <input type="button" class="btn btn-outline-dark clear" waves-effect value="C"/>
+                            <input type="button" class="btn btn-outline-dark" value="0"/>
+                            <input type="button" class="btn btn-outline-dark clear" value="C"/>
                         </div>
                         <div class="btn-group btn-group-lg" role="group" aria-label="Fourth Row">
-                            <input type="submit" name="send" class="btn btn-outline-dark" waves-effect value="Send"/>
+                            <input type="submit" name="send" class="btn btn-outline-dark" value="Send" disabled/>
                         </div>
                     </div>
                 </div>
@@ -65,7 +74,8 @@
 
 <script>
     const input = {
-        displayValue: ""
+        displayValue: "",
+        isDisable: true
     };
 
     function inputDigit(digit) {
@@ -73,22 +83,19 @@
     }
 
     function updateDisplay() {
-        const display = document.querySelector("input[name=suggestNumber]");
+        const display = document.querySelector("input[name=guessNumber]");
         display.value = input.displayValue;
-    }
 
-    function disableButton() {
-        const btn = document.querySelector("input[name=send]");
-        btn.setAttribute("disabled", "disabled");
-    }
+        const d = document.querySelector("h1[name=guessNumber]");
+        d.textContent = input.displayValue;
 
-    function resetButton() {
         const btn = document.querySelector("input[name=send]");
-        btn.removeAttribute("disabled");
+        btn.disabled = input.isDisable;
     }
 
     function resetDisplay() {
         input.displayValue = "";
+        input.isDisable = true
     }
 
     const keys = document.querySelector(".input-keys");
@@ -107,16 +114,12 @@
 
         inputDigit(target.value);
 
-
-
-        if (input.displayValue.length < "4") {
-            disableButton();
-        } else if (input.displayValue.length === 4) {
-            resetButton();
-        }
-
         if (input.displayValue.length > "4") {
             return;
+        }
+
+        if (input.displayValue.length === 4) {
+            input.isDisable = false
         }
 
         updateDisplay();
