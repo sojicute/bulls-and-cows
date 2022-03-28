@@ -32,7 +32,6 @@ public class GameController {
 
     @PostMapping("/game")
     public String play(@AuthenticationPrincipal User user, @ModelAttribute("game") Game game, Model model) {
-        System.out.println(game.getSecretNumber());
         game.checkGuess(game.getSecretNumber(), game.getGuessNumber());
         if (game.isCompleted()) {
             Stat stat = statService.findStatByUser(user);
@@ -56,7 +55,6 @@ public class GameController {
     @PostMapping("/reset")
     public String reset(@ModelAttribute("game") Game game) {
         game.reset();
-        System.out.println("New secret number "+game.getSecretNumber());
         return "game";
     }
 

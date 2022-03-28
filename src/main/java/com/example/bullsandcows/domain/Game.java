@@ -5,27 +5,47 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 
-
+/**
+ * Класс описывает некоторые процессы игры
+ * @autor sojicute
+ */
 public class Game {
 
+    /** Поле генерируемой строки */
     private String secretNumber;
 
+    /** Поле со значением строки от пользователя */
     private String guessNumber;
 
+    /** Поле проверки завершение игры */
     private boolean isCompleted;
 
+    /** Поле для хранения попыток */
     private final List<Attempt> attempts = new ArrayList<>();
 
+    /**
+     * Конструктор запускает функцию {@link Game#start()}
+     */
     public Game() {
         start();
     }
 
+    /**
+     * Функция устанавливает значение полей
+     * {@link Game#secretNumber}
+     * {@link Game#attempts}
+     * {@link Game#isCompleted}
+     */
     private void start() {
         secretNumber = generateSecretString();
         attempts.clear();
         isCompleted = false;
     }
 
+    /**
+     * Функция сбрасывает значение поля {@link Game#secretNumber} и генириует новое.
+     * {@link Game#start()}
+     */
     public void reset() {
         start();
     }
@@ -58,7 +78,13 @@ public class Game {
         return attempts;
     }
 
-    public Boolean checkGuess(String secretNumber, String guessNumber) {
+    /**
+     * Функция проверяет совпадают ли строки {@link Game#secretNumber} и {@link Game#guessNumber}
+     * В случае удачной попытки завершает игру {@link Game#isCompleted}
+     * @param secretNumber
+     * @param guessNumber
+     */
+    public void checkGuess(String secretNumber, String guessNumber) {
 
         Attempt attempt = new Attempt();
         attempt.setCurrentGuessNumber(guessNumber);
@@ -83,9 +109,12 @@ public class Game {
         if (attempt.getBullCount() == 4) {
             isCompleted = true;
         }
-        return true;
     }
 
+    /**
+     * Функция генерирует случайное четырехзначное число без повторения цифр и конвертирует его в строку.
+     * @return возвращает строку для {@link Game#secretNumber}
+     */
     private static String generateSecretString() {
         List<Integer> ints = new ArrayList<>();
         Random rand = new Random();
