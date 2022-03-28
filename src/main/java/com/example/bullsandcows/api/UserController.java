@@ -75,7 +75,7 @@ public class UserController {
             return "signup";
         }
 
-        return "redirect:/home";
+        return "redirect:/leaderboard";
     }
 
 }
