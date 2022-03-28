@@ -6,7 +6,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav mx-auto">
         <li class="nav-item">
-          <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/home' ? 'active':''}" th:href="@{/home}">Home</a>
+          <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/leaderboard' ? 'active':''}" th:href="@{/leaderboard}">Leaderboard</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" th:classappend="${#httpServletRequest.getRequestURI() == '/game' ? 'active':''}" th:href="@{/game}">Game</a>

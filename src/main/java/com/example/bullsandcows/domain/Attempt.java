@@ -5,10 +5,7 @@ public class Attempt {
     private Integer cowCount = 0;
     private Integer bullCount = 0;
 
-//    @NotEmpty(message = "Number cannot be empty")
-//    @Size(min = 4, max=4, message = "Number must have at least 4 characters ")
-//    private String suggestNumber;
-
+    private String currentGuessNumber;
 
     public Integer getCowCount() {
         return cowCount;
@@ -24,5 +21,13 @@ public class Attempt {
 
     public void setBullCount(Integer bullCount) {
         this.bullCount = bullCount;
+    }
+
+    public String getCurrentGuessNumber() {
+        return currentGuessNumber;
+    }
+
+    public void setCurrentGuessNumber(String currentGuessNumber) {
+        this.currentGuessNumber = currentGuessNumber;
     }
 }

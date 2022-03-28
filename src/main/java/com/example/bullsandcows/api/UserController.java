@@ -1,7 +1,6 @@
 package com.example.bullsandcows.api;
 
 import com.example.bullsandcows.domain.Stat;
-import com.example.bullsandcows.domain.User;
 import com.example.bullsandcows.dto.UserDto;
 import com.example.bullsandcows.exception.UserAlreadyExistException;
 import com.example.bullsandcows.service.StatService;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,17 +28,18 @@ public class UserController {
     @Autowired
     private StatService statService;
 
-    @GetMapping("/home")
-    public String home(Model model) {
+    @GetMapping("/leaderboard")
+    public String leaderboard(Model model) {
         List<Stat> stats = statService.findAll();
 
-        Comparator<Stat> comparator = Comparator.comparingInt(Stat::getGameCount);
-        comparator = comparator.thenComparing(Comparator.comparingDouble(Stat::getAverageAttemptCount).reversed());
+        Comparator<Stat> comparator = Comparator.comparingInt(Stat::getGameCount).reversed();
+        comparator = comparator.thenComparingDouble(Stat::getAverageAttemptCount);
+
 
         List<Stat> sortedStat = stats.stream().sorted(comparator).collect(Collectors.toList());
 
         model.addAttribute("stats", sortedStat);
-        return "/home";
+        return "leaderboard";
     }
 
     @RequestMapping("/login")

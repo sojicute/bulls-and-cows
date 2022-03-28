@@ -7,7 +7,7 @@
 
 <div class="container">
     <section class="py-5">
-        <h1>Leaderboard</h1>
+        <p class="display-6">Leaderboard</p>
         <table class="table">
             <thead>
             <tr>
@@ -24,7 +24,7 @@
                 <td th:text="${stat.user.username}"></td>
                 <td th:text="${stat.attemptCount}"></td>
                 <td th:text="${stat.gameCount}"></td>
-                <td th:text="${stat.averageAttemptCount}"></td>
+                <td th:text="${#numbers.formatDecimal(stat.averageAttemptCount, 0, 2)}"></td>
             </tr>
             </tbody>
         </table>

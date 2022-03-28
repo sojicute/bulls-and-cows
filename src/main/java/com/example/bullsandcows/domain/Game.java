@@ -1,14 +1,6 @@
 package com.example.bullsandcows.domain;
 
-import lombok.*;
-import org.springframework.beans.factory.annotation.Lookup;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
-import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -69,6 +61,7 @@ public class Game {
     public Boolean checkGuess(String secretNumber, String guessNumber) {
 
         Attempt attempt = new Attempt();
+        attempt.setCurrentGuessNumber(guessNumber);
 
         String[] secretArr = secretNumber.split("");
         String[] guessArr = guessNumber.split("");

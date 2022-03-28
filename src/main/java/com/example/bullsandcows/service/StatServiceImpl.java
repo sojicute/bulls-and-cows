@@ -1,6 +1,5 @@
 package com.example.bullsandcows.service;
 
-import com.example.bullsandcows.domain.Game;
 import com.example.bullsandcows.domain.Stat;
 import com.example.bullsandcows.domain.User;
 import com.example.bullsandcows.repository.StatRepository;

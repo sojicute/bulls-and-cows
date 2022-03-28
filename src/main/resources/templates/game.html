@@ -14,7 +14,7 @@
         </div>
         <div class="col">
             <ul th:each="attempt : ${game.getAttempts()}" class="list-group list-group-flush">
-                <p th:text="${ 'Б' + attempt.bullCount + 'К' + attempt.cowCount +' '+ game.getGuessNumber()}" class="list-group-item h4"></p>
+                <p th:text="${ 'Б' + attempt.bullCount + 'К' + attempt.cowCount +' '+ attempt.currentGuessNumber}" class="list-group-item h4"></p>
             </ul>
             <p th:text="${message}" class="display-6 text-success"></p>
         </div>
@@ -23,18 +23,13 @@
                 <h1 name="guessNumber" class="card-title text-capitalize">0000</h1>
             </div>
 
-            <form th:action="@{/game}" th:object="${game}" method="POST">
+            <form  th:object="${game}" method="POST">
                 <div class="row">
 
                     <div class="col-8 col-sm-10 mb-3">
-                        <input type="text" name="guessNumber" class="form-control" value="">
+                        <input type="hidden" name="guessNumber" class="form-control" value="" >
                     </div>
 
-                    <div th:each="error: ${#fields.errors('guessNumber')}" th:text="${error}">
-                        Validation error
-                    </div>
-
-                    <h1 th:text="${#fields.hasErrors('guessNumber')}? 'is-invalid':''"></h1>
 
                     <div class="col-4 col-sm-2 mb-3">
                         <button class="btn btn-outline-dark" type="submit">Send</button>
